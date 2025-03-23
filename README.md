@@ -81,4 +81,26 @@ You can automate this process using setup commands.
 
 - After setup, `mltest.egg-info` is created, which can be deployed to PyPI.
 
-This document serves as a structured guide to setting up an ML project efficiently.
+---
+
+## **Project Structure (Automated in 12 Lines of Code)**
+
+### **1. Components**
+
+- **`components/`**: Modules used for this specific project.
+- **`__init__.py`**: Initializes the components package.
+- **Data Ingestion**: Reads data from a database and splits it into train, test, and validation sets.
+- **Data Transformation**: Converts text/categorical features to numerical features (e.g., One-Hot Encoding, Label Encoding).
+- **Model Trainer**: Trains models, evaluates using metrics like confusion matrix & adjusted R², and pushes models to the cloud.
+
+### **2. Pipelines**
+
+- **`__init__.py`**: Initializes the pipeline package.
+- **Training Pipeline**: Calls the **Components** classes to train the model.
+- **Prediction Pipeline**: Uses the trained model to make predictions.
+
+### **3. Source Code Folder (`src/`)**
+
+- **`logger.py`**: Handles logging throughout the project.
+- **`exception.py`**: Manages exception handling.
+- **`utils.py`**: Reads datasets, saves models, and interacts with cloud storage.
