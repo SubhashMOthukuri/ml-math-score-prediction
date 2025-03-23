@@ -1,0 +1,8 @@
+End to end Ml
+Set up Projection  with GitHub
+Data Ingestion
+Data Transformation
+Model trainer
+Model Evaluation
+model deployment 
+Ci and cd pipeline - GitHub actions deployment aws and azure
