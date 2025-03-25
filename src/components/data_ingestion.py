@@ -1,40 +1,106 @@
+## ==============================================
+## DATA INGESTION MODULE FOR MACHINE LEARNING PIPELINE
+## ==============================================
+## Author: Subhash Mothukuru
+## Created On: May 10 2024
+## Description:
+##     - This script is responsible for reading datasets from various sources
+##       such as CSV files, databases, and APIs.
+##     - It performs a train-test split and saves the processed datasets
+##       into an "artifacts" directory for further processing.
+##     - This module is typically used in a data science workflow to ensure
+##       data is prepared before training machine learning models.
+## ==============================================
+
 import os
 import sys
-from src.exception import CustomException
-from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+from src.exception import CustomException
+from src.logger import logging
+
+
+from src.components.data_tranformation import DataTransformation
+from src.components.data_tranformation import DataTransformationConfig
 
 @dataclass
 class DataIngestionConfig:
+    """
+    Configuration class for data ingestion.
+    
+    This class defines paths where raw, train, and test data will be stored.
+    These paths are used to save preprocessed data as artifacts for further 
+    machine learning model training.
+    
+    Attributes:
+        train_data_path (str): Path where the training dataset will be stored.
+        test_data_path (str): Path where the test dataset will be stored.
+        raw_data_path (str): Path where the raw dataset will be stored.
+    """
     train_data_path: str = os.path.join('artifacts', "train.csv")
     test_data_path: str = os.path.join('artifacts', "test.csv")
     raw_data_path: str = os.path.join('artifacts', "data.csv")
 
+
 class DataIngestion:
-    def __init__(self): 
+    """
+    Data ingestion class that reads a dataset, splits it into training and testing sets, 
+    and saves the resulting files to predefined locations.
+
+    This class can be extended to read data from databases, APIs, or cloud storage.
+    """
+
+    def __init__(self):
+        """
+        Initialize DataIngestion with default configurations.
+        """
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
-        logging.info("Entered the data ingestion method or component")
-        try:
-            # Fix path issue
-            df = pd.read_csv(r'notebook/data/stud.csv')  # Use raw string or forward slashes
-            logging.info('Read the dataset as dataframe')
+        """
+        Reads data from a CSV file, performs a train-test split, and saves the datasets.
 
-            # Fix makedirs issue
+        Steps:
+        1. Read data from a specified source (CSV in this case).
+        2. Ensure the "artifacts" directory exists.
+        3. Save the raw dataset for reference.
+        4. Split the data into training (80%) and testing (20%) sets.
+        5. Save the training and testing datasets separately.
+        
+        Returns:
+            tuple: Paths of train and test datasets.
+        
+        Raises:
+            CustomException: If any error occurs during data ingestion.
+        """
+        logging.info("Entered the data ingestion method.")
+
+        try:
+            # Step 1: Read the dataset
+            dataset_path = r'notebook/data/stud.csv'  # Modify this to read from a database if needed
+            df = pd.read_csv(dataset_path)  # Read CSV file into a DataFrame
+            logging.info("Dataset successfully loaded into a pandas DataFrame.")
+
+            # Step 2: Create directory for artifacts if it does not exist
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
 
+            # Step 3: Save the raw dataset
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
+            logging.info(f"Raw data saved at {self.ingestion_config.raw_data_path}")
 
-            logging.info("Train-test split initiated")
+            # Step 4: Perform Train-Test Split
+            logging.info("Splitting dataset into training and testing sets...")
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
+            logging.info("Train-test split completed.")
 
+            # Step 5: Save train and test datasets
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
-            test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)  # Fixed test data path
+            test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
+            logging.info(f"Training data saved at {self.ingestion_config.train_data_path}")
+            logging.info(f"Testing data saved at {self.ingestion_config.test_data_path}")
 
-            logging.info("Ingestion of the data is completed")
+            logging.info("Data ingestion process completed successfully.")
 
             return (
                 self.ingestion_config.train_data_path,
@@ -42,8 +108,20 @@ class DataIngestion:
             )
 
         except Exception as e:
+            logging.error("Error during data ingestion", exc_info=True)
             raise CustomException(e, sys)
 
+
 if __name__ == "__main__":
+    """
+    Entry point for executing the data ingestion process.
+
+    This section allows the script to be run independently. In a production 
+    machine learning pipeline, this module would be imported and executed as part 
+    of a larger workflow.
+    """
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data =obj.initiate_data_ingestion()
+
+    data_tranformation=DataTransformation()
+    data_tranformation.initiate_data_transformation(train_data, test_data)
