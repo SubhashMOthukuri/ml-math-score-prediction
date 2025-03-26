@@ -1,8 +1,8 @@
 ## ==============================================
 ## DATA TRANSFORMATION MODULE FOR MACHINE LEARNING PIPELINE
 ## ==============================================
-## Author: [Your Name]
-## Created On: [Date]
+## Author: Subhash Mothukuru
+## Created On: 05/10/2024
 ## Description:
 ##     - This script is responsible for transforming raw datasets by handling missing values,
 ##       encoding categorical features, and scaling numerical features.
