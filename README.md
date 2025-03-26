@@ -54,17 +54,21 @@ The goal of this project is to build a predictive model that estimates a student
    ```
 
 **Install Dependencies**:
+
 ```bash
 pip install -r requirements.txt
 ```
+
 ## Prepare the Dataset:
+
 Place your dataset (e.g., students_data.csv) in the data/ directory.
 
 Ensure it contains at least three columns: reading_score, writing_score, and math_score.
 
 ## Usage
+
 1. Train the Model
-Run the training pipeline to evaluate regression models and save the best one:
+   Run the training pipeline to evaluate regression models and save the best one:
 
 ```bash
 python src/model_training.py
@@ -81,16 +85,19 @@ Train and compare multiple regression models.
 Fine-tune the best model and save it as trained_model.pkl.
 
 ## 2. Run the Flask Application
+
 Launch the web application for real-time predictions:
 
 ```bash
 python app.py
 ```
+
 Open your browser and navigate to http://127.0.0.1:5000.
 
 Enter a student's reading and writing scores to get a predicted math score.
 
 ## Pipeline Details
+
 **Data Ingestion Layer (data_ingestion.py)**:
 Loads the dataset and performs initial validation/cleaning.
 
@@ -114,13 +121,14 @@ Contains reusable functions (e.g., model saving/loading, logging).
 HTML files for the Flask web interface.
 
 ## Model Selection
+
 The project evaluates multiple regression algorithms, including:
 
- - Linear Regression
+- Linear Regression
 
- - Decision Tree Regressor
+- Decision Tree Regressor
 
- - Random Forest Regressor
+- Random Forest Regressor
 
 - Gradient Boosting Regressor (e.g., XGBoost, LightGBM)
 
@@ -129,16 +137,23 @@ The project evaluates multiple regression algorithms, including:
 The model with the highest accuracy (based on R² score or similar metric) is selected and fine-tuned.
 
 ## Fine-Tuning
+
 Hyperparameters of the best model are optimized using techniques like Grid Search or Randomized Search to maximize predictive performance.
 
 ## Deployment
+
 The Flask application (app.py) integrates the trained model and provides a simple UI where users can:
 
- - Input reading and writing scores.
+- Input reading and writing scores.
 
- - Receive the predicted math score instantly.
+- Receive the predicted math score instantly.
 
-Future Improvements
+## Flask Web Interface Screenshot
+
+![Flask Web Interface](Lib/home_page.png)(Lib/output.png)
+
+## Future Improvements
+
 - Add cross-validation for more robust model evaluation.
 
 - Incorporate additional features (e.g., study time, gender) for better predictions.
