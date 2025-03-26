@@ -148,9 +148,19 @@ The Flask application (app.py) integrates the trained model and provides a simpl
 
 - Receive the predicted math score instantly.
 
-## Flask Web Interface Screenshot
+## Flask Web Application
 
-![Flask Web Interface](Lib/home_page.png)(Lib/output.png)
+### Home Page Screenshot
+
+Here is the screenshot of the home page of the Flask web application:
+
+![Home Page Screenshot](screenshots/home_page.png)
+
+### Output Screenshot
+
+This is the screenshot showing the output of the prediction when a user inputs their data:
+
+![Output Screenshot](screenshots/output.png)
 
 ## Future Improvements
 
