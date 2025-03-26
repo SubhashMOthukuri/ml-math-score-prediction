@@ -53,25 +53,23 @@ The goal of this project is to build a predictive model that estimates a student
    cd predicting-math-scores
    ```
 
-## Install Dependencies:
-
+**Install Dependencies**:
 ```bash
-Copy
-Edit
 pip install -r requirements.txt
-Prepare the Dataset:
+```
+## Prepare the Dataset:
 Place your dataset (e.g., students_data.csv) in the data/ directory.
 
 Ensure it contains at least three columns: reading_score, writing_score, and math_score.
 
-Usage
+## Usage
 1. Train the Model
 Run the training pipeline to evaluate regression models and save the best one:
 
-bash
-Copy
-Edit
+```bash
 python src/model_training.py
+```
+
 This script will:
 
 Load data from the data/ directory.
@@ -82,25 +80,24 @@ Train and compare multiple regression models.
 
 Fine-tune the best model and save it as trained_model.pkl.
 
-2. Run the Flask Application
+## 2. Run the Flask Application
 Launch the web application for real-time predictions:
 
-bash
-Copy
-Edit
+```bash
 python app.py
+```
 Open your browser and navigate to http://127.0.0.1:5000.
 
 Enter a student's reading and writing scores to get a predicted math score.
 
-Pipeline Details
-Data Ingestion Layer (data_ingestion.py):
+## Pipeline Details
+**Data Ingestion Layer (data_ingestion.py)**:
 Loads the dataset and performs initial validation/cleaning.
 
-Data Transformation Layer (data_transformation.py):
+**Data Transformation Layer (data_transformation.py)**:
 Handles missing values, feature scaling, and encoding (if applicable).
 
-Model Training Layer (model_training.py):
+**Model Training Layer (model_training.py)**:
 Trains multiple regression models (e.g., Linear Regression, Random Forest, etc.).
 
 Evaluates performance using metrics like RMSE, R², and MAE.
@@ -110,46 +107,42 @@ Fine-tunes the best model using grid search or random search.
 Prediction Pipeline Layer (prediction_pipeline.py):
 Loads the trained model and processes user inputs for predictions.
 
-Utility Layer (utils.py):
+**Utility Layer (utils.py)**:
 Contains reusable functions (e.g., model saving/loading, logging).
 
-UI Templates (templates/):
+**UI Templates (templates/)**:
 HTML files for the Flask web interface.
 
-Model Selection
+## Model Selection
 The project evaluates multiple regression algorithms, including:
 
-Linear Regression
+ - Linear Regression
 
-Decision Tree Regressor
+ - Decision Tree Regressor
 
-Random Forest Regressor
+ - Random Forest Regressor
 
-Gradient Boosting Regressor (e.g., XGBoost, LightGBM)
+- Gradient Boosting Regressor (e.g., XGBoost, LightGBM)
 
-Support Vector Regressor (SVR)
+- Support Vector Regressor (SVR)
 
 The model with the highest accuracy (based on R² score or similar metric) is selected and fine-tuned.
 
-Fine-Tuning
+## Fine-Tuning
 Hyperparameters of the best model are optimized using techniques like Grid Search or Randomized Search to maximize predictive performance.
 
-Deployment
+## Deployment
 The Flask application (app.py) integrates the trained model and provides a simple UI where users can:
 
-Input reading and writing scores.
+ - Input reading and writing scores.
 
-Receive the predicted math score instantly.
+ - Receive the predicted math score instantly.
 
 Future Improvements
-Add cross-validation for more robust model evaluation.
+- Add cross-validation for more robust model evaluation.
 
-Incorporate additional features (e.g., study time, gender) for better predictions.
+- Incorporate additional features (e.g., study time, gender) for better predictions.
 
-Deploy the app to a cloud platform (e.g., Heroku, AWS).
+- Deploy the app to a cloud platform (e.g., Heroku, AWS).
 
-Enhance the UI with JavaScript for a more interactive experience.
-
-Contributing
-Feel free to fork this repository, submit issues, or create pull requests with improvements!
-```
+- Enhance the UI with JavaScript for a more interactive experience.
